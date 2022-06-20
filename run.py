@@ -3,6 +3,7 @@
 import os
 from collections import OrderedDict
 
+import youtube_dl
 import m3u8
 
 channels = OrderedDict({"Televisión Pública": "https://www.youtube.com/user/TVPublicaArgentina",
@@ -22,16 +23,29 @@ channels = OrderedDict({"Televisión Pública": "https://www.youtube.com/user/TV
                         "DW": "https://www.youtube.com/c/dwespanol",
                         "Euronews": "https://www.youtube.com/c/euronewses",
                         "Vorterix": "https://www.youtube.com/c/VorterixOficial",
-                        "Urbana Play 104.3 FM": "https://www.youtube.com/c/UrbanaPlay1043FM",
+                        #"Urbana Play 104.3 FM": "https://www.youtube.com/c/UrbanaPlay1043FM",
                         "El Destape Radio": "https://www.youtube.com/channel/UCgOvQwLB387CWMrseINhyCg",
-                        "La 100": "https://www.youtube.com/watch?v=MSrGOYTm7YM&ab_channel=La100",
+                        "La 100": "https://www.youtube.com/c/La100",
                         "POP Radio": "https://www.youtube.com/c/popradio1015",
                         })
-querier = "http://free.fullspeed.tv/iptv-query?streaming-ip="
+
+ydl_opts = {"format": "best[height=720]",
+            "skip_download": True,
+            "forceurl": True,
+            "quiet": False}
 
 playlist = m3u8.M3U8()
 for channel, url in channels.items():
-    playlist.add_playlist(f"#EXTINF:-1,{channel}\n{querier}{url}/live")
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+
+        try:
+            info = ydl.extract_info(f"{url}/live")
+
+        except:
+            print(f"Oops! Something went wrong with {channel}")
+            continue
+
+    playlist.add_playlist(f"#EXTINF:-1,{channel}\n{info['url']}")
 
 os.makedirs("_build", exist_ok=True)
 playlist.dump("_build/live.m3u")
