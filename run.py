@@ -7,8 +7,8 @@ import youtube_dl
 import m3u8
 
 channels = OrderedDict({"Televisión Pública": "https://www.youtube.com/user/TVPublicaArgentina",
-                        #"Telefe Córdoba": "https://www.youtube.com/channel/UC3OQ66wEJaOPHK25IBdWR_g",
-                        #"Telefe Rosario": "https://www.youtube.com/channel/UCPr0HEFKN8wtDIfcPsVB10Q",
+                        "Telefe Córdoba": "https://www.youtube.com/channel/UC3OQ66wEJaOPHK25IBdWR_g",
+                        "Telefe Rosario": "https://www.youtube.com/channel/UCPr0HEFKN8wtDIfcPsVB10Q",
                         #"Telefe Salta": "https://www.youtube.com/channel/UCy-r-BQ5BQRU6rzGS73-WBQ",
                         #"Todo Noticias": "https://www.youtube.com/c/todonoticias",
                         #"A24": "https://www.youtube.com/c/A24com",
@@ -45,7 +45,7 @@ for channel, url in channels.items():
             print(f"Oops! Something went wrong with {channel}")
             continue
 
-    playlist.add_playlist(f"#EXTINF:-1,{channel}\n{info['url']}")
+    playlist.add_playlist(f"#EXTINF:-1,{channel}\n#EXT-X-STREAM-INF:CODECS=\"avc1.4d4020,mp4a.40.2\"\n{info['url']}")
 
 os.makedirs("_build", exist_ok=True)
 playlist.dump("_build/live.m3u")
