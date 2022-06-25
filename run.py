@@ -45,7 +45,7 @@ for channel, url in channels.items():
             print(f"Oops! Something went wrong with {channel}")
             continue
 
-    playlist.add_playlist(f"#EXTINF:-1,{channel}\n#EXT-X-STREAM-INF:CODECS=\"avc1.4d4020,mp4a.40.2\"\n{info['url']}")
+    playlist.add_playlist(f"#EXTINF:-1,{channel}\n{info['url']}")
 
 os.makedirs("_build", exist_ok=True)
 playlist.dump("_build/live.m3u")
