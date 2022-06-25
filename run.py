@@ -29,7 +29,7 @@ channels = OrderedDict({"Televisión Pública": "https://www.youtube.com/user/TV
                         "POP Radio": "https://www.youtube.com/c/popradio1015",
                         })
 
-ydl_opts = {"format": "best[height=480]",
+ydl_opts = {"format": "best[height=720]",
             "skip_download": True,
             "forceurl": True,
             "quiet": False}
@@ -45,7 +45,7 @@ for channel, url in channels.items():
             print(f"Oops! Something went wrong with {channel}")
             continue
 
-    playlist.add_playlist(f"#EXTINF:-1,{channel}\n{info['url']}")
+    playlist.add_playlist(f"#EXTINF:-1,{channel}\n#EXT-X-STREAM-INF:CODECS=\"mp4a.40.2\"\n{info['url']}")
 
 os.makedirs("_build", exist_ok=True)
 playlist.dump("_build/live.m3u")
