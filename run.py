@@ -29,7 +29,7 @@ channels = OrderedDict({"Televisión Pública": "https://www.youtube.com/user/TV
                         "POP Radio": "https://www.youtube.com/c/popradio1015",
                         })
 
-ydl_opts = {"format": "best[height=720]",
+ydl_opts = {"format": "best[height=480]",
             "skip_download": True,
             "forceurl": True,
             "quiet": False}
